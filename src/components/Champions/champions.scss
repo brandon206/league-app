@@ -1,0 +1,10 @@
+
+div .championData {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.championData > div {
+    padding: 10px;
+}
