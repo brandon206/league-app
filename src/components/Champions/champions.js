@@ -17,15 +17,15 @@ class Champions extends Component {
                     <div className="championImage">
                         <img src={item.image_url} alt="champion_image"/>
                     </div>
-                    <div className="championName center">{item.name}</div>
+                    <div className="championName center white-text btn grey ">{item.name}</div>
                 </div>
             );
             
         });
         console.log("this is the champion: ",champions);
         return (
-            <div>
-                <h1 className = "center">Champions</h1>
+            <div className = "championBG">
+                <h1 className = "center white-text">Champions</h1>
                 <div className = "championData">
                     {championData}
                 </div>

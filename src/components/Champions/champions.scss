@@ -1,4 +1,11 @@
 
+#root {
+    background-image: url('../../assets/images/background.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
 div .championData {
     display: flex;
     flex-wrap: wrap;
@@ -7,4 +14,9 @@ div .championData {
 
 .championData > div {
     padding: 10px;
+}
+
+.championName {
+    width: 100%;
+    font-size: 0.8em;
 }
