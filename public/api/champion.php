@@ -1,5 +1,5 @@
 <?php
-$proxyURL = "https://api.pandascore.co/lol/champions?filter[name]=Brand&token=9hBdfanuM4g5NGYky5NJAxrKFSNqbg2G1Xr2V52TaTdmFgHm0x0";
+$proxyURL = "https://api.pandascore.co/lol/champions?&token=9hBdfanuM4g5NGYky5NJAxrKFSNqbg2G1Xr2V52TaTdmFgHm0x0";
 $acceptableHeaders = [];
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: ". implode(',',$acceptableHeaders));
