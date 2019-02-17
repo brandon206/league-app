@@ -19,11 +19,17 @@ class Champions extends Component {
             currentPage: Number(event.target.id),
         });
     }
-    
 
     componentDidMount() {
         this.props.getChampionData();
     }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('this is next props: ', nextProps.champion.champion.champions);
+        this.setState({
+          championsList: nextProps.champion.champion.champions,
+        });
+      }
 
     render(){
         
@@ -48,13 +54,11 @@ class Champions extends Component {
             );
         }
 
-        if(champions.length > 0){
-            if(championsList.length === 0){
-                this.setState({
-                    championsList: champions
-                });
-            }
-        }
+        // if(champions.length > 0){
+        //     if(championsList.length === 0){
+        //         this.componentDidUpdate(champions);
+        //     }
+        // }
 
         // const championData = champions.map ((item, index) => {
         //     return(
