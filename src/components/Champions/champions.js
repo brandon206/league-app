@@ -24,12 +24,24 @@ class Champions extends Component {
         this.props.getChampionData();
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log('this is next props: ', nextProps.champion.champion.champions);
-        this.setState({
-          championsList: nextProps.champion.champion.champions,
-        });
-      }
+    static getDerivedStateFromProps(props, state) {
+        const { champion : { champion : { champions } } } = props;
+        if (champions !== state.championsList) {
+            console.log("HEY IT WORKED!");
+          return {
+            championsList: champions
+          };
+        }else {
+            return null;
+        }
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    //     console.log('this is next props: ', nextProps.champion.champion.champions);
+    //     this.setState({
+    //       championsList: nextProps.champion.champion.champions,
+    //     });
+    //   }
 
     render(){
         
