@@ -1,30 +1,74 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+// import { getChampionData } from '../../actions';
 
 class Pagination extends Component {
     constructor (props){
         super(props);
-        const { totalRecords = null, pageLimit = 30, pageNeighbours = 0 } = props;
+        this.state = {
+            championsList: this.props.champions,
+            currentPage: 1,
+            championsPerPage: 4
+        };
+    }
 
+    handleClick = (event) => {
+        this.setState({
+            currentPage: Number(event.target.id),
+        });
+    }
 
-        this.pageLimit = typeof pageLimit === 'number' ? pageLimit: 30;
-        this.totalRecords = typeof totalRecords === 'number' ? totalRecords: 0;
+    // renderNewChampionList = (champions) => {
+    //     var newChampions = champions.slice(0,3);
+    //     this.setState({
+    //         championsList: newChampions
+    //     });
+    // }
 
-        // pageNeighbours can be: 0, 1  or 2
-        this.pageNeighbours = typeof pageNeighbours === 'number' ?
-            Math.max(0, Math.min(pageNeighbours, 2)) : 0;
+    // componentDidMount() {
+    //     this.props.getChampionData();
+    // }
 
-        this.totalPages = Math.ceil(this.totalRecords / this.pageLimit);
+    render() {
+        const { championsList, currentPage, championsPerPage } = this.state;
+        // const { champion : { champion : { champions } } } = this.props;
+        // if(champions.length > 0){
+        //     this.renderNewChampionList(champions);
+        // }
 
-        this.state = { currentPage: 1 };
+        console.log("this is champions list: ", this.state.championsList);
+
+        //logic for displaying current todos
+        const indexOfLastChampion = currentPage * championsPerPage;
+        const indexOfFirstChampion = indexOfLastChampion - championsPerPage;
+        const currentChampions = championsList.slice(indexOfFirstChampion, indexOfLastChampion);
+
+        const renderChampions = currentChampions.map((champion, index) => {
+            return <div key={index}>{champion.name}</div>
+        });
+
+        //logic for displaying page numbers
+        const pageNumbers = [];
+        for(let i = 1; i <= Math.ceil(currentChampions.length / championsPerPage); i++){
+            pageNumbers.push(i);
+        }
+
+        const renderPageNumbers = pageNumbers.map(number => {
+            return (
+            <li key = {number} id= {number} onClick = {this.handleClick}>
+                {number}
+            </li>
+            );
+        });
+
+        return (
+            <div>
+                <ul>{renderChampions}</ul>
+                <ul id= "page-numbers">{renderPageNumbers}</ul>
+            </div>
+        );
     }
 }
 
-Pagination.propTypes = {
-    totalRecords: PropTypes.number.isRequired,
-    pageLimit: PropTypes.number,
-    pageNeighbours: PropTypes.number,
-    onPageChanged: PropTypes.func
-};
-
-export default Pagination;
+export default Pagination

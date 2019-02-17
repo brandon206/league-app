@@ -2,24 +2,63 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { getChampionData } from '../../actions';
 import championscss from './champions.scss';
+import Pagination from '../Pagination/pagination';
 
 class Champions extends Component {
-    constructor() {
-        super();
+    constructor (props){
+        super(props);
         this.state = {
-            
-        }
+            championsList: [],
+            currentPage: 1,
+            championsPerPage: 4
+        };
     }
+
+    handleClick = (event) => {
+        this.setState({
+            currentPage: Number(event.target.id),
+        });
+    }
+    
 
     componentDidMount() {
         this.props.getChampionData();
     }
 
     render(){
+        
         const { champion : { champion : { champions } } } = this.props;
+        const { championsList, currentPage, championsPerPage } = this.state;
+
+        if(champions.length === 0){
+            return (
+                <div className="spinner-container">
+                    <div className="preloader-wrapper big active">
+                        <div className="spinner-layer spinner-blue-only">
+                        <div className="circle-clipper left">
+                            <div className="circle"></div>
+                        </div><div className="gap-patch">
+                            <div className="circle"></div>
+                        </div><div className="circle-clipper right">
+                            <div className="circle"></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        if(champions.length > 0){
+            if(championsList.length === 0){
+                this.setState({
+                    championsList: champions
+                });
+            }
+        }
+
         const championData = champions.map ((item, index) => {
             return(
-                <div key = {index}>
+                <div className = "championInfo" key = {index}>
                     <div className="championImage">
                         <img src={item.image_url} alt="champion_image"/>
                     </div>
@@ -29,9 +68,34 @@ class Champions extends Component {
             
         });
         console.log("this is the champion: ",champions);
+
+        console.log("this is champions list: ", this.state.championsList);
+
+        //logic for displaying current todos
+        const indexOfLastChampion = currentPage * championsPerPage;
+        const indexOfFirstChampion = indexOfLastChampion - championsPerPage;
+        const currentChampions = championsList.slice(indexOfFirstChampion, indexOfLastChampion);
+
+        const renderChampions = currentChampions.map((champion, index) => {
+            return <div key={index}>{champion.name}</div>
+        });
+
+        //logic for displaying page numbers
+        const pageNumbers = [];
+        for(let i = 1; i <= Math.ceil(championsList.length / championsPerPage); i++){
+            pageNumbers.push(i);
+        }
+
+        const renderPageNumbers = pageNumbers.map(number => {
+            return (
+            <li key = {number} id= {number} onClick = {this.handleClick}>
+                {number}
+            </li>
+            );
+        });
         return (
             <Fragment>
-                <div className = "championBG">
+                {/* <div className = "championBG">
                     <h1 className = "center white-text">Champions</h1>
                     <form>
                         <div class="input-field search-bar">
@@ -43,7 +107,12 @@ class Champions extends Component {
                     <div className = "championData">
                         {championData}
                     </div>
+                </div> */}
+                <div>
+                    <ul>{renderChampions}</ul>
+                    <ul id= "page-numbers">{renderPageNumbers}</ul>
                 </div>
+                {/* <Pagination champions = {champions}/> */}
                 <div className = "pagination-container">
                     <ul className="pagination center">
                         <li className="disabled"><a href="#!"><i className="material-icons">chevron_left</i></a></li>

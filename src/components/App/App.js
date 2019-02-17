@@ -5,6 +5,7 @@ import Navbar from '../NavBar/navbar';
 import { Route } from 'react-router-dom';
 import Champions from '../Champions/champions';
 import Items from '../Items/items';
+import Pagination from '../Pagination/pagination';
 
 class App extends Component {
     render () {
@@ -12,7 +13,7 @@ class App extends Component {
             <div className = "container">
                 <Navbar />
                 <Route exact path = '/' component = {Champions}/>
-                {/* <Route path ='/items' component = {Items}/> */}
+                <Route path ='/items' component = {Pagination}/>
             </div>
         );
     }
