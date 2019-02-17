@@ -10,7 +10,7 @@ class Champions extends Component {
         this.state = {
             championsList: [],
             currentPage: 1,
-            championsPerPage: 4
+            championsPerPage: 20
         };
     }
 
@@ -56,17 +56,17 @@ class Champions extends Component {
             }
         }
 
-        const championData = champions.map ((item, index) => {
-            return(
-                <div className = "championInfo" key = {index}>
-                    <div className="championImage">
-                        <img src={item.image_url} alt="champion_image"/>
-                    </div>
-                    <div className="championName center white-text btn grey ">{item.name}</div>
-                </div>
-            );
+        // const championData = champions.map ((item, index) => {
+        //     return(
+        //         <div className = "championInfo" key = {index}>
+        //             <div className="championImage">
+        //                 <img src={item.image_url} alt="champion_image"/>
+        //             </div>
+        //             <div className="championName center white-text btn grey ">{item.name}</div>
+        //         </div>
+        //     );
             
-        });
+        // });
         console.log("this is the champion: ",champions);
 
         console.log("this is champions list: ", this.state.championsList);
@@ -77,7 +77,14 @@ class Champions extends Component {
         const currentChampions = championsList.slice(indexOfFirstChampion, indexOfLastChampion);
 
         const renderChampions = currentChampions.map((champion, index) => {
-            return <div key={index}>{champion.name}</div>
+            return (
+                <div className = "championInfo" key = {index}>
+                    <div className="championImage">
+                        <img src={champion.image_url} alt="champion_image"/>
+                    </div>
+                    <div className="championName center white-text btn grey ">{champion.name}</div>
+                </div>
+            );
         });
 
         //logic for displaying page numbers
@@ -88,7 +95,7 @@ class Champions extends Component {
 
         const renderPageNumbers = pageNumbers.map(number => {
             return (
-            <li key = {number} id= {number} onClick = {this.handleClick}>
+            <li className = "btn blue lighten-1 page-numbers" key = {number} id= {number} onClick = {this.handleClick}>
                 {number}
             </li>
             );
@@ -109,11 +116,13 @@ class Champions extends Component {
                     </div>
                 </div> */}
                 <div>
-                    <ul>{renderChampions}</ul>
-                    <ul id= "page-numbers">{renderPageNumbers}</ul>
+                    <div className = "championData">{renderChampions}</div>
+                    <div className="pagination-container">
+                        <ul id= "page-numbers">{renderPageNumbers}</ul>
+                    </div>
                 </div>
                 {/* <Pagination champions = {champions}/> */}
-                <div className = "pagination-container">
+                {/* <div className = "pagination-container">
                     <ul className="pagination center">
                         <li className="disabled"><a href="#!"><i className="material-icons">chevron_left</i></a></li>
                         <li className="active"><a href="#!">1</a></li>
@@ -123,7 +132,7 @@ class Champions extends Component {
                         <li className="waves-effect"><a href="#!">5</a></li>
                         <li className="waves-effect"><a href="#!"><i className="material-icons">chevron_right</i></a></li>
                     </ul>
-                </div>
+                </div> */}
             </Fragment>
         );
     }
