@@ -7,6 +7,13 @@ html {
     background-size: cover;
 }
 
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    height: 75vh;
+    align-items: center;
+}
+
 div .championData {
     display: flex;
     flex-wrap: wrap;
@@ -27,10 +34,19 @@ div .championData {
     }
 }
 
+.championImage > img:hover {
+    box-shadow: 1px 1px 8px 4px whitesmoke;
+    cursor: pointer;
+}
+
 .championName {
     width: 100%;
     max-width: 120px;
     font-size: 0.8em;
+}
+
+.championName:hover {
+    box-shadow: 5px 5px 8px -1px #000000;
 }
 
 .search-bar {
