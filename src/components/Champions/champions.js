@@ -77,7 +77,7 @@ class Champions extends Component {
             return (
                 <div className = "championInfo" key = {index}>
                     <div className="championImage">
-                        <img src={champion.image_url} alt="champion_image"/>
+                        <img src={champion.big_image_url} alt="champion_image"/>
                     </div>
                     <div className="championName center white-text btn grey ">{champion.name}</div>
                 </div>

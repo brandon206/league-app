@@ -39,11 +39,13 @@ div .championData {
     cursor: pointer;
 }
 
+.championImage > img {
+    max-width: 100%;
+}
+
 .championName {
     width: 100%;
-    max-width: 120px;
     font-size: 0.8em;
-    min-height: 75px;
 }
 
 .championName:hover {
