@@ -9,13 +9,15 @@ class Champions extends Component {
         this.state = {
             championsList: [],
             currentPage: 1,
-            championsPerPage: 20
+            championsPerPage: 20,
+            loading: false
         };
     }
 
     handleClick = (event) => {
         this.setState({
             currentPage: Number(event.target.id),
+            loading: true
         });
     }
 
@@ -26,9 +28,9 @@ class Champions extends Component {
     static getDerivedStateFromProps(props, state) {
         const { champion : { champion : { champions } } } = props;
         if (champions !== state.championsList) {
-          return {
-            championsList: champions
-          };
+            return {
+                championsList: champions
+            };
         }else {
             return null;
         }
@@ -38,7 +40,9 @@ class Champions extends Component {
     // call another action to set loading to false
 
     render(){
-        
+        console.log("this is the state: ", this.state);
+        console.log("this is the props: ", this.props);
+
         const { champion : { champion : { champions } } } = this.props;
         const { championsList, currentPage, championsPerPage } = this.state;
 
@@ -68,7 +72,7 @@ class Champions extends Component {
         const indexOfLastChampion = currentPage * championsPerPage;
         const indexOfFirstChampion = indexOfLastChampion - championsPerPage;
         const currentChampions = championsList.slice(indexOfFirstChampion, indexOfLastChampion);
-
+        
         const renderChampions = currentChampions.map((champion, index) => {
             return (
                 <div className = "championInfo" key = {index}>
