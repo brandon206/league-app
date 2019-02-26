@@ -9,7 +9,7 @@ class Champions extends Component {
         this.state = {
             championsList: [],
             currentPage: 1,
-            championsPerPage: 20,
+            championsPerPage: 40,
             loading: false
         };
     }
