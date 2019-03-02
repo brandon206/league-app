@@ -9,7 +9,7 @@ class Champions extends Component {
         this.state = {
             championsList: [],
             currentPage: 1,
-            championsPerPage: 20,
+            championsPerPage: 40,
             loading: false
         };
     }
@@ -19,10 +19,17 @@ class Champions extends Component {
             currentPage: Number(event.target.id),
             loading: true
         });
+        setTimeout(() => this.doneLoading(), 1000);
     }
 
     componentDidMount() {
         this.props.getChampionData();
+    }
+
+    doneLoading(){
+        this.setState({
+            loading: false
+        });
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -46,7 +53,7 @@ class Champions extends Component {
         const { champion : { champion : { champions } } } = this.props;
         const { championsList, currentPage, championsPerPage } = this.state;
 
-        if(this.state.championsList.length === 0){
+        if(this.state.championsList.length === 0 || this.state.loading){    
             return (
                 <div className="spinner-container">
                     <div className="preloader-wrapper big active">
@@ -77,7 +84,7 @@ class Champions extends Component {
             return (
                 <div className = "championInfo" key = {index}>
                     <div className="championImage">
-                        <img src={champion.image_url} alt="champion_image"/>
+                        <img src={champion.big_image_url} alt="champion_image"/>
                     </div>
                     <div className="championName center white-text btn grey ">{champion.name}</div>
                 </div>
