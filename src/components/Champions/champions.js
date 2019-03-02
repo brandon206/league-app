@@ -19,10 +19,17 @@ class Champions extends Component {
             currentPage: Number(event.target.id),
             loading: true
         });
+        setTimeout(() => this.doneLoading(), 1000);
     }
 
     componentDidMount() {
         this.props.getChampionData();
+    }
+
+    doneLoading(){
+        this.setState({
+            loading: false
+        });
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -46,7 +53,7 @@ class Champions extends Component {
         const { champion : { champion : { champions } } } = this.props;
         const { championsList, currentPage, championsPerPage } = this.state;
 
-        if(this.state.championsList.length === 0){
+        if(this.state.championsList.length === 0 || this.state.loading){    
             return (
                 <div className="spinner-container">
                     <div className="preloader-wrapper big active">
