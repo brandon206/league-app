@@ -14,7 +14,7 @@ class App extends Component {
                 <Navbar />
                 <Route exact path = '/' component = {Champions}/>
                 <Route path ='/items' component = {Items}/>
-                <Route path ='/items' component = {ItemPresets}/>
+                {/* <Route path ='/items' component = {ItemPresets}/> */}
             </div>
         );
     }
