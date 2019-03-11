@@ -1,5 +1,5 @@
 <?php
-$proxyURL = "https://api.pandascore.co/lol/items?token=9hBdfanuM4g5NGYky5NJAxrKFSNqbg2G1Xr2V52TaTdmFgHm0x0&sort=name";
+$proxyURL = "https://api.pandascore.co/lol/versions/9.4.1/items?token=9hBdfanuM4g5NGYky5NJAxrKFSNqbg2G1Xr2V52TaTdmFgHm0x0&sort=name";
 $acceptableHeaders = [];
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: ". implode(',',$acceptableHeaders));

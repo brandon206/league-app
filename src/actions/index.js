@@ -36,10 +36,16 @@ export function getItemData() {
         const response = await axios.get("/api/items.php", {
             params: {
                 token: "9hBdfanuM4g5NGYky5NJAxrKFSNqbg2G1Xr2V52TaTdmFgHm0x0",
+                page: 1,
                 sort: "name"
             }
         });
         console.log("This is the response: ", response);
+
+        dispatch({
+            type: types.GET_ITEM_DATA,
+            payload: response
+        });
 
     }
 }
