@@ -4,18 +4,53 @@ import { getItemData } from '../../actions';
 import items from './items.scss';
 
 class Items extends Component {
+    constructor (props){
+        super(props);
+        this.state = {
+            itemsList: [],
+            currentPage: 1,
+            itemsPerPage: 40,
+            loading: false
+        };
+    }
+
+    handleClick = (event) => {
+        this.setState({
+            currentPage: Number(event.target.id),
+            loading: true
+        });
+        setTimeout(() => this.doneLoading(), 1000);
+    }
 
     componentDidMount() {
         this.props.getItemData();
     }
 
+    doneLoading(){
+        this.setState({
+            loading: false
+        });
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        const { item : { item : { items } } } = props;
+        if (items !== state.itemsList) {
+            return {
+                itemsList: items
+            };
+        }else {
+            return null;
+        }
+    }
+
     render () {
         const { item: {item : { items } } } = this.props;
+        const { itemsList, currentPage, itemsPerPage } = this.state;
         console.log("this is the ITEMstate: ", this.state);
         console.log("this is the ITEMprops: ", this.props);
-        console.log("these are the items: ", items);
+        // console.log("these are the items: ", items);
 
-        if(items.length === 0){    
+        if(this.state.itemsList.length === 0 || this.state.loading){    
             return (
                 <div className="spinner-container">
                     <div className="preloader-wrapper big active">
@@ -33,7 +68,15 @@ class Items extends Component {
             );
         }
 
-        const renderItems = items.data.map((item, index) => {
+        console.log("this is the items: ", items);
+        console.log("this is the items list: ", this.state.itemsList);
+
+        //logic for displaying current todos
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        const currentItems = itemsList.slice(indexOfFirstItem, indexOfLastItem);
+
+        const renderItems = currentItems.map((item, index) => {
             return (
                 <div className = "itemInfo" key = {index}>
                     <div className="itemImage">
@@ -48,10 +91,27 @@ class Items extends Component {
             );
         });
 
+        //logic for displaying page numbers
+        const pageNumbers = [];
+        for(let i = 1; i <= Math.ceil(itemsList.length / itemsPerPage); i++){
+            pageNumbers.push(i);
+        }
+
+        const renderPageNumbers = pageNumbers.map(number => {
+            return (
+            <li className = "btn blue lighten-1 page-numbers" key = {number} id= {number} onClick = {this.handleClick}>
+                {number}
+            </li>
+            );
+        });
+
         return (
             <Fragment>
                 <h1 className = "center white-text">Items Page</h1>
                 <div className = "itemData">{renderItems}</div>
+                <div className="pagination-container">
+                    <ul id="page-numbers">{renderPageNumbers}</ul>
+                </div>
             </Fragment>
         );
     }
